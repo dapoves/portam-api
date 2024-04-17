@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('establecimientos', function (Blueprint $table) {
+        Schema::create('productos', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('nombre');
-            $table->string('poblacion');
-            $table->string('direccion');
+            $table->string('descripcion');
             $table->string('imagen');
-            $table->foreignId('categoria_id');
-            $table->integer('tiempoPreparacion');
-            $table->double('costeEnvio');
+            $table->double('precio', 6, 2);
+            $table->foreignId('establecimiento_id');
+            $table->enum('tamano', ['pequeno', 'mediano', 'grande']);
             $table->bigInteger('likes')->default(0);
+            $table->timestamps();
+
+            $table->foreign('establecimiento_id')
+                ->references('id')->on('establecimientos');
         });
     }
 
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('establecimientos');
+        Schema::dropIfExists('productos');
     }
 };
