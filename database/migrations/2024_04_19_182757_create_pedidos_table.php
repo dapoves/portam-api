@@ -15,14 +15,16 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cliente_id');
             $table->foreignId('establecimiento_id');
+            $table->double('precioTotal', 6, 2);
+            $table->text('indicaciones')->nullable();
             $table->foreignId('repartidor_id')->nullable();
+            $table->foreignId('tarjeta_id')->nullable();
             $table->enum('estado', ['pendiente', 'aceptado', 'en camino', 'entregado', 'cancelado'])->default('pendiente');
             $table->dateTime('fechaPedido');
             $table->dateTime('fechaAceptado')->nullable();
             $table->dateTime('fechaEntrega')->nullable();
-            $table->double('precioTotal', 6, 2);
             $table->timestamps();
-
+    
             $table->foreign('cliente_id')
                 ->references('id')->on('usuarios')
                 ->onDelete('cascade');
@@ -30,6 +32,9 @@ return new class extends Migration
                 ->references('id')->on('establecimientos');
             $table->foreign('repartidor_id')
                 ->references('id')->on('usuarios')
+                ->onDelete('set null');
+            $table->foreign('tarjeta_id')
+                ->references('id')->on('tarjetas')
                 ->onDelete('set null');
         });
     }
