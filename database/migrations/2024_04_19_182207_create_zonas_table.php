@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('provincia');
-            $table->string('codmunidad');
+            $table->string('comunidad');
             $table->timestamps();
         });
     }

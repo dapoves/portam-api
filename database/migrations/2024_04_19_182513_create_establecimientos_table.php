@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('establecimientos', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('nombre');
             $table->foreignId('poblacion_id');
             $table->string('direccion');
             $table->string('imagen');
             $table->foreignId('categoria_id');
-            $table->integer('tiempoPreparacion');
+            $table->integer('tiempoPreparacion')->nullable();
             $table->double('costeEnvio', 5, 2);
             $table->bigInteger('likes')->default(0);
+            $table->timestamps();
+
 
             $table->foreign('categoria_id')
             ->references('id')->on('categorias');

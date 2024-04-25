@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('tamano', ['pequeno', 'mediano', 'grande']);
             $table->bigInteger('likes')->default(0);
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('establecimiento_id')
                 ->references('id')->on('establecimientos');

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('poblaciones', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('codigoPostal');
+            $table->integer('codigoPostal', 5);
             $table->foreignId('zona_id');
             $table->timestamps();
 
