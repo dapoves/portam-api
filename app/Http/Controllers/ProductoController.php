@@ -41,7 +41,16 @@ class ProductoController extends Controller
             ]);
         }
         
-         
+        $array = $request->all();
+        foreach ($array as $key => $value) {
+            if ($request->filled($key)) {
+                $producto->update([
+                    $key => $value
+                ]);
+            }
+        }
+
+        return $producto;
 
     }
     
