@@ -66,6 +66,17 @@ class ProductoController extends Controller
         ]);
     }
 
+    public function restore($producto){
+        $producto = Producto::withTrashed()->find($producto);
+        $producto->restore();
+        return 'Producto '.$producto->id.' restaurado';//WIP
+    }
+
+    public function showByEstablecimiento($establecimiento){
+        $productos = Producto::where('establecimiento_id', '=', $establecimiento)->get();
+        return $productos;
+    }
+
     public function validateProducto()
     {
         return request()->validate([
