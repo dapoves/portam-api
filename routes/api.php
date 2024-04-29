@@ -6,7 +6,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\EstablecimientoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PedidoController;
-
+use App\Http\Controllers\LoginController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,6 +31,8 @@ Route::middleware(['auth'])->group(function(){
 
 });
 
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/register', [LoginController::class, 'register']);
 
 
 Route::prefix('/productos')->group(function () {
@@ -41,13 +43,7 @@ Route::prefix('/productos')->group(function () {
     Route::post('/', [ProductoController::class, 'store']);
 });
 
-Route::prefix('/categorias')->group(function () {
-    Route::get('/', [CategoriaController::class, 'index']);
-    // Route::get('/{categoria}', [CategoriaController::class, 'show']);
-    // Route::delete('/{categoria}', [CategoriaController::class, 'destroy']);
-    // Route::post('/{categoria}', [CategoriaController::class, 'update']);
-    // Route::post('/', [CategoriaController::class, 'store']);
-});
+Route::get('/categorias', [CategoriaController::class, 'index']);
 
 Route::prefix('/establecimientos')->group(function () {
     Route::get('/', [EstablecimientoController::class, 'index']);

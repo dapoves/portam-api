@@ -52,9 +52,9 @@ class PedidoController extends Controller
         return request()->validate([
             'cliente_id' => 'required',
             'establecimiento_id' => 'required',
+            'tarjeta_id' => 'required',
             'precioTotal' => 'required',
-            'indicaciones' => 'required',
-            'repartidor_id' => 'required',
+            'indicaciones' => 'required'
         ]);
     }
 }

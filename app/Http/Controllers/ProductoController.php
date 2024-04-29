@@ -40,9 +40,13 @@ class ProductoController extends Controller
                 'imagen' => $imagen->hashName()
             ]);
         }
-        
-         
 
+        $producto->update($request->all());
+        return response()->json([
+            'message' => "Producto actualizado correctamente",
+            'status' => 'ok',
+            'producto' => $producto
+        ]);
     }
     
 
