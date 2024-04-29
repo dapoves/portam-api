@@ -40,13 +40,9 @@ class ProductoController extends Controller
                 'imagen' => $imagen->hashName()
             ]);
         }
+        
+         
 
-        $producto->update($request->all());
-        return response()->json([
-            'message' => "Producto actualizado correctamente",
-            'status' => 'ok',
-            'producto' => $producto
-        ]);
     }
     
 
@@ -59,6 +55,17 @@ class ProductoController extends Controller
             'status' => 'ok',
             'producto' => $producto
         ]);
+    }
+
+    public function restore($producto){
+        $producto = Producto::withTrashed()->find($producto);
+        $producto->restore();
+        return 'Producto '.$producto->id.' restaurado';//WIP
+    }
+
+    public function showByEstablecimiento($establecimiento){
+        $productos = Producto::where('establecimiento_id', '=', $establecimiento)->get();
+        return $productos;
     }
 
     public function validateProducto()
