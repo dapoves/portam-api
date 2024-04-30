@@ -41,8 +41,19 @@ class ProductoController extends Controller
             ]);
         }
         
-         
-
+        $array = $request->all();
+        foreach ($array as $key => $value) {
+            if ($request->filled($key)) {
+                $coche->update([
+                    $key => $value
+                ]);
+            }
+        } 
+        return response()->json([
+            'message' => "Producto actualizado correctamente",
+            'status' => 'ok',
+            'producto' => $producto
+        ]);
     }
     
 
