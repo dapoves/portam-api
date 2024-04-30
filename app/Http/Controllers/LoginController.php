@@ -4,20 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
     public function login(Request $request){
-        $request->validate([
+        $credentials = $request->validate([
             'email' => 'required|email',
             'contrasenya' => 'required'
         ]);
 
-        if(auth()->attempt($request->only('email', 'contrasenya'))){
+        if (Auth::attempt($credentials)) {
+            $user = User::where('email', $request['email'])->firstOrFail();
+            $token = $user->createToken('auth_token')->plainTextToken;
             return response()->json([
-                'token' => auth()->user()->createToken('token')->plainTextToken,
-                'message' => 'Login exitoso'
+                'token' => $token,
+                'message' => 'Bienvenido' . $user->nombre,
             ]);
         }
 
@@ -26,7 +29,7 @@ class LoginController extends Controller
         ], 401);
     }
 
-    public function register(Request $request){
+    public function register(Request $request){ //probar el valiate
         $request->validate([
             'nombre' => 'required',
             'email' => 'required|email',
@@ -46,6 +49,12 @@ class LoginController extends Controller
         ]);
     }
 
-
+    public function logout(Request $request){
+        $request->session()->flush();
+        auth()->user()->tokens()->delete();
+        return [
+            'message' => 'Has cerrado sesión y el token ha sido eliminado'
+        ];
+    }
 
 }
