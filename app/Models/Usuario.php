@@ -18,13 +18,7 @@ class Usuario extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'nombre',
-        'email',
-        'contrasenya',
-        'telefono',
-        'rol',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
