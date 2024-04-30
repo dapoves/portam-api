@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('email')->unique();
-            $table->string('contrasenya');
+            $table->string('password');
             $table->string('telefono')->nullable();
             $table->enum('rol', ['admin', 'socio', 'repartidor', 'cliente'])->default('cliente');
             $table->timestamp('email_verified_at')->nullable();

@@ -16,6 +16,13 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $producto = Producto::create($this->validateProducto());
+        $imagen = $request->file('imagen');
+        if($imagen){
+            $imagen->store('productos', 'public');
+            $producto->update([
+                'imagen' => $imagen->hashName()
+            ]);
+        }
         return response()->json([
             'message' => "Producto creado correctamente",
             'status' => 'ok',

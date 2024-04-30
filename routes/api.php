@@ -25,15 +25,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware(['auth'])->group(function(){
 
+    Route::post('/logout', [LoginController::class, 'logout']);
 
     Route::middleware('can:admin')->group(function(){
     });
 
 });
 
-Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [LoginController::class, 'register']);
-
+Route::post('/login', [LoginController::class, 'login']);
 
 Route::prefix('/productos')->group(function () {
     Route::get('/', [ProductoController::class, 'index']);
@@ -44,6 +44,10 @@ Route::prefix('/productos')->group(function () {
 });
 
 Route::get('/categorias', [CategoriaController::class, 'index']);
+Route::post('/categorias', [CategoriaController::class, 'store']);
+Route::put('/categorias/{categoria}', [CategoriaController::class, 'update']);
+Route::delete('/categorias/{categoria}', [CategoriaController::class, 'destroy']);
+
 
 Route::prefix('/establecimientos')->group(function () {
     Route::get('/', [EstablecimientoController::class, 'index']);

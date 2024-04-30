@@ -12,7 +12,7 @@ class LoginController extends Controller
     public function login(Request $request){
         $credentials = $request->validate([
             'email' => 'required|email',
-            'contrasenya' => 'required'
+            'password' => 'required'
         ]);
 
         if (Auth::attempt($credentials)) {
@@ -20,7 +20,7 @@ class LoginController extends Controller
             $token = $user->createToken('auth_token')->plainTextToken;
             return response()->json([
                 'token' => $token,
-                'message' => 'Bienvenido' . $user->nombre,
+                'message' => 'Bienvenido ' . $user->nombre,
             ]);
         }
 
@@ -33,14 +33,14 @@ class LoginController extends Controller
         $request->validate([
             'nombre' => 'required',
             'email' => 'required|email',
-            'contrasenya' => 'required',
-            'recontrasenya' => 'required|same:contrasenya'
+            'password' => 'required',
+            'repassword' => 'required|same:password'
         ]);
 
         $user = User::create([
             'nombre' => $request->nombre,
             'email' => $request->email,
-            'contrasenya' => Hash::make($request->contrasenya),
+            'password' => Hash::make($request->password),
         ]);
 
         return response()->json([
