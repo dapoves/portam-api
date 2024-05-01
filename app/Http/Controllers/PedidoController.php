@@ -49,12 +49,15 @@ class PedidoController extends Controller
     }
 
     public function validatePedido(){
-        return request()->validate([
+    
+        return array_merge(request()->validate([
             'cliente_id' => 'required',
             'establecimiento_id' => 'required',
             'tarjeta_id' => 'required',
             'precioTotal' => 'required',
             'indicaciones' => 'required'
+        ]), [
+            'fechaPedido' => date('Y-m-d H:i:s'),
         ]);
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\EstablecimientoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\TarjetaController;
 use App\Http\Controllers\LoginController;
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['auth'])->group(function(){
 
     Route::post('/logout', [LoginController::class, 'logout']);
+
+    Route::post('/tarjetas', [TarjetaController::class, 'store']);
+    Route::get('/tarjetas', [TarjetaController::class, 'showByCliente']);
+
 
     Route::middleware('can:admin')->group(function(){
     });

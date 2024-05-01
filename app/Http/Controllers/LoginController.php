@@ -45,7 +45,7 @@ class LoginController extends Controller
 
         return response()->json([
             'token' => $user->createToken('token')->plainTextToken,
-            'message' => 'Usuario creado correctamente'
+            'message' => 'User creado correctamente'
         ]);
     }
 

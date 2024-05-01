@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -14,7 +15,7 @@ return new class extends Migration
         Schema::create('poblaciones', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->integer('codigoPostal', 5);
+            $table->integer('codigoPostal');
             $table->foreignId('zona_id');
             $table->timestamps();
 
@@ -29,5 +30,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('poblaciones');
+        DB::statement("ALTER TABLE poblaciones AUTO_INCREMENT = 1;");
     }
 };

@@ -13,12 +13,12 @@ class Envio extends Model
     
     public function cliente()
     {
-        return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(User::class);
     }
 
     public function repartidor()
     {
-        return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(User::class);
     }
 
     public function poblacionOrigen()
