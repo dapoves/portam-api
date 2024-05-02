@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //añadir timestamps
         Schema::create('envios', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cliente_id');
