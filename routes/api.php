@@ -19,8 +19,11 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/user', function (Request $request) {
+    if(Auth::check()){
+        return $request->user();
+    }
+    return null;
 });
 
 
