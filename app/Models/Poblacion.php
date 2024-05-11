@@ -11,6 +11,8 @@ class Poblacion extends Model
 
     protected $guarded = [];
 
+    protected $table = 'poblaciones';
+
     public function zona()
     {
         return $this->belongsTo(Zona::class);

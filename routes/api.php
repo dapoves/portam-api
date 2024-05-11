@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\PoblacionController;
 use App\Http\Controllers\EstablecimientoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PedidoController;
@@ -55,6 +56,9 @@ Route::get('/categorias', [CategoriaController::class, 'index']);
 Route::post('/categorias', [CategoriaController::class, 'store']);
 Route::put('/categorias/{categoria}', [CategoriaController::class, 'update']);
 Route::delete('/categorias/{categoria}', [CategoriaController::class, 'destroy']);
+
+Route::get('/poblaciones', [PoblacionController::class, 'index']);
+Route::get('/poblaciones/{poblacion}', [PoblacionController::class, 'show']);
 
 
 Route::prefix('/establecimientos')->group(function () {
