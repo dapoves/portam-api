@@ -24,7 +24,7 @@ Route::get('/user', function (Request $request) {
     if(Auth::check()){
         return $request->user();
     }
-    return null;
+    return 'no estas logueado';
 });
 
 
@@ -67,6 +67,7 @@ Route::prefix('/establecimientos')->group(function () {
     Route::delete('/{establecimiento}', [EstablecimientoController::class, 'destroy']);
     Route::put('/{establecimiento}', [EstablecimientoController::class, 'update']);
     Route::post('/', [EstablecimientoController::class, 'store']);
+    Route::get('/{establecimiento}/productos', [EstablecimientoController::class, 'getProductos']);
 });
 
 Route::prefix('/pedidos')->group(function () {

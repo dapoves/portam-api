@@ -12,4 +12,14 @@ class EstablecimientoController extends Controller
         $establecimientos = Establecimiento::all();
         return $establecimientos;
     }
+
+    public function show(Establecimiento $establecimiento)
+    {
+        return $establecimiento;
+    }
+
+    public function getProductos(Establecimiento $establecimiento)
+    {
+        return $establecimiento->productos;
+    }
 }

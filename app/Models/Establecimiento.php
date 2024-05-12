@@ -20,4 +20,9 @@ class Establecimiento extends Model
     {
         return $this->belongsTo(Poblacion::class);
     }
+
+    public function productos()
+    {
+        return $this->hasMany(Producto::class);
+    }
 }
