@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('establecimiento_id');
             $table->double('precioTotal', 6, 2);
             $table->text('indicaciones')->nullable();
+            $table->text('direccion');
             $table->foreignId('repartidor_id')->nullable();
             $table->foreignId('tarjeta_id')->nullable();
             $table->enum('estado', ['pendiente', 'aceptado', 'en camino', 'entregado', 'cancelado'])->default('pendiente');

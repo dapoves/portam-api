@@ -55,7 +55,8 @@ class PedidoController extends Controller
             'establecimiento_id' => 'required',
             'tarjeta_id' => 'required',
             'precioTotal' => 'required',
-            'indicaciones' => 'required'
+            'indicaciones' => 'required',
+            'direccion' => 'required'
         ]), [
             'fechaPedido' => date('Y-m-d H:i:s'),
         ]);
