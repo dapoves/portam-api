@@ -19,7 +19,8 @@ class LoginController extends Controller
             $user = User::where('email', $request['email'])->firstOrFail();
             $token = $user->createToken('auth_token')->plainTextToken;
             return response()->json([
-                'token' => $token,
+                'access_token' => $token,
+                'token_type' => 'Bearer',
                 'status' => 'ok',
                 'user' => [
                     'nombre' => $user->nombre,
@@ -54,7 +55,8 @@ class LoginController extends Controller
         Auth::attempt($credentials);
 
         return response()->json([
-            'token' => $user->createToken('token')->plainTextToken,
+            'accessToken' => $user->createToken('auth_token')->plainTextToken,
+            'token_type' => 'Bearer',
             'message' => 'User creado correctamente',
             'status' => 'ok',
             'user' => [
