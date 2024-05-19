@@ -18,8 +18,65 @@ class EstablecimientoController extends Controller
         return $establecimiento;
     }
 
-    public function getProductos(Establecimiento $establecimiento)
+    public function store(Request $request)
     {
-        return $establecimiento->productos;
+        $establecimiento = Establecimiento::create($this->validateEstablecimiento());
+        $imagen = $request->file('imagen');
+        if($imagen){
+            $imagen->store('establecimientos', 'public');
+            $establecimiento->update([
+                'imagen' => $imagen->hashName()
+            ]);
+        }
+        return response()->json([
+            'message' => "Establecimiento creado correctamente",
+            'status' => 'ok',
+            'establecimiento' => $establecimiento
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $establecimiento = Establecimiento::findOrFail($id);
+
+        $imagen = $request->file('imagen');
+        if($imagen){
+            $imagen->store('establecimientos', 'public');
+            $establecimiento->update([
+                'imagen' => $imagen->hashName()
+            ]);
+        }
+        
+        $array = $request->all();
+        foreach ($array as $key => $value) {
+            if ($request->filled($key)) {
+                $establecimiento->update([
+                    $key => $value
+                ]);
+            }
+        } 
+        return response()->json([
+            'message' => "Establecimiento actualizado correctamente",
+            'status' => 'ok',
+            'establecimiento' => $establecimiento
+        ]);
+    }
+
+    public function getEstablecimientos(Establecimiento $establecimiento)
+    {
+        return $establecimiento->establecimientos;
+    }
+
+    public function validateEstablecimiento(){
+        return request()->validate([
+            'nombre' => 'required',
+            'direccion' => 'required',
+            'poblacion_id' => 'required',
+            'telefono' => 'required',
+            'imagen' => 'required',
+            'categoria_id' => 'required',
+            'tiempoPreparacion' => 'required',
+            'costeEnvio' => 'required'
+        ]);
     }
 }

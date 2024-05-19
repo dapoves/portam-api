@@ -28,6 +28,11 @@ class PedidoController extends Controller
         return $pedido;
     }
 
+    public function showByCliente($id){
+        $pedidos = Pedido::where('cliente_id', $id)->get();
+        return $pedidos;
+    }
+
     public function update(Request $request, $id){
         $pedido = Pedido::findOrFail($id);
         $pedido->update($request->all());
@@ -48,6 +53,11 @@ class PedidoController extends Controller
         ]);
     }
 
+    public function getProductos($id){
+        $pedido = Pedido::findOrFail($id);
+        return $pedido->productos;
+    }
+
     public function validatePedido(){
     
         return array_merge(request()->validate([
@@ -55,7 +65,6 @@ class PedidoController extends Controller
             'establecimiento_id' => 'required',
             'tarjeta_id' => 'required',
             'precioTotal' => 'required',
-            'indicaciones' => 'required',
             'direccion' => 'required'
         ]), [
             'fechaPedido' => date('Y-m-d H:i:s'),

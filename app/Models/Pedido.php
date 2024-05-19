@@ -30,4 +30,9 @@ class Pedido extends Model
     {
         return $this->belongsTo(Tarjeta::class);
     }
+
+    public function productos()
+    {
+        return $this->belongsToMany(Producto::class, 'pedido_producto')->withPivot('cantidad');
+    }
 }

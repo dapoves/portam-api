@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\PedidoProductoController;
 use App\Http\Controllers\PoblacionController;
 use App\Http\Controllers\EstablecimientoController;
 use App\Http\Controllers\CategoriaController;
@@ -74,6 +75,14 @@ Route::prefix('/pedidos')->group(function () {
     Route::get('/', [PedidoController::class, 'index']);
     Route::get('/{pedido}', [PedidoController::class, 'show']);
     Route::delete('/{pedido}', [PedidoController::class, 'destroy']);
-    Route::post('/{pedido}', [PedidoController::class, 'update']);
+    Route::put('/{pedido}', [PedidoController::class, 'update']);
     Route::post('/', [PedidoController::class, 'store']);
+    Route::get('/mis-pedidos/{cliente}', [PedidoController::class, 'showByCliente']);
+
 });
+
+Route::get('/pedido/productos', [PedidoProductoController::class, 'index']);
+Route::post('/pedido/productos', [PedidoProductoController::class, 'store']);
+Route::get('/pedido/{pedido}/productos', [PedidoController::class, 'getProductos']);
+
+

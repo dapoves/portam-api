@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pedido_id');
             $table->foreignId('producto_id');
-            $table->integer('cantidad');
+            $table->integer('cantidad')->default(1);
             $table->timestamps();
 
             $table->foreign('pedido_id')
@@ -36,7 +36,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('pedido_producto');
         DB::statement("ALTER TABLE pedido_producto AUTO_INCREMENT = 1;");
-
-        
     }
 };
