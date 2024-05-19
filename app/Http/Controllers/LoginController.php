@@ -24,6 +24,7 @@ class LoginController extends Controller
                 'status' => 'ok',
                 'user' => [
                     'nombre' => $user->nombre,
+                    'id' => $user->id,
                     'email' => $user->email ]
             ]);
         }

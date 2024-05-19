@@ -25,17 +25,25 @@ Route::get('/user', function (Request $request) {
     if(Auth::check()){
         return $request->user();
     }
-    return 'no estas logueado';
+    return $request->user();
 });
 
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth:sanctum'])->group(function(){
 
     Route::post('/logout', [LoginController::class, 'logout']);
 
     Route::post('/tarjetas', [TarjetaController::class, 'store']);
     Route::get('/tarjetas', [TarjetaController::class, 'showByCliente']);
 
+    Route::prefix('/establecimientos')->group(function () {
+        Route::get('/', [EstablecimientoController::class, 'index']);
+        Route::get('/{establecimiento}', [EstablecimientoController::class, 'show']);
+        Route::delete('/{establecimiento}', [EstablecimientoController::class, 'destroy']);
+        Route::put('/{establecimiento}', [EstablecimientoController::class, 'update']);
+        Route::post('/', [EstablecimientoController::class, 'store']);
+        Route::get('/{establecimiento}/productos', [EstablecimientoController::class, 'getProductos']);
+    });    
 
     Route::middleware('can:admin')->group(function(){
     });
@@ -62,14 +70,6 @@ Route::get('/poblaciones', [PoblacionController::class, 'index']);
 Route::get('/poblaciones/{poblacion}', [PoblacionController::class, 'show']);
 
 
-Route::prefix('/establecimientos')->group(function () {
-    Route::get('/', [EstablecimientoController::class, 'index']);
-    Route::get('/{establecimiento}', [EstablecimientoController::class, 'show']);
-    Route::delete('/{establecimiento}', [EstablecimientoController::class, 'destroy']);
-    Route::put('/{establecimiento}', [EstablecimientoController::class, 'update']);
-    Route::post('/', [EstablecimientoController::class, 'store']);
-    Route::get('/{establecimiento}/productos', [EstablecimientoController::class, 'getProductos']);
-});
 
 Route::prefix('/pedidos')->group(function () {
     Route::get('/', [PedidoController::class, 'index']);
