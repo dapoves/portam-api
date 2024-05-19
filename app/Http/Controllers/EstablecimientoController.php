@@ -62,9 +62,8 @@ class EstablecimientoController extends Controller
         ]);
     }
 
-    public function getEstablecimientos(Establecimiento $establecimiento)
-    {
-        return $establecimiento->establecimientos;
+    public function getProductos(Establecimiento $establecimiento){
+        return $establecimiento->productos;
     }
 
     public function validateEstablecimiento(){
