@@ -8,6 +8,7 @@ use App\Http\Controllers\PoblacionController;
 use App\Http\Controllers\EstablecimientoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\EnvioController;
 use App\Http\Controllers\TarjetaController;
 use App\Http\Controllers\LoginController;
 /*
@@ -32,23 +33,19 @@ Route::get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function(){
 
     Route::post('/logout', [LoginController::class, 'logout']);
-
-    Route::post('/tarjetas', [TarjetaController::class, 'store']);
-    Route::get('/tarjetas', [TarjetaController::class, 'showByCliente']);
-
-    Route::prefix('/establecimientos')->group(function () {
-        Route::get('/', [EstablecimientoController::class, 'index']);
-        Route::get('/{establecimiento}', [EstablecimientoController::class, 'show']);
-        Route::delete('/{establecimiento}', [EstablecimientoController::class, 'destroy']);
-        Route::put('/{establecimiento}', [EstablecimientoController::class, 'update']);
-        Route::post('/', [EstablecimientoController::class, 'store']);
-        Route::get('/{establecimiento}/productos', [EstablecimientoController::class, 'getProductos']);
-    });    
-
     Route::middleware('can:admin')->group(function(){
     });
 
 });
+
+Route::prefix('/establecimientos')->group(function () {
+    Route::get('/', [EstablecimientoController::class, 'index']);
+    Route::get('/{establecimiento}', [EstablecimientoController::class, 'show']);
+    Route::delete('/{establecimiento}', [EstablecimientoController::class, 'destroy']);
+    Route::put('/{establecimiento}', [EstablecimientoController::class, 'update']);
+    Route::post('/', [EstablecimientoController::class, 'store']);
+    Route::get('/{establecimiento}/productos', [EstablecimientoController::class, 'getProductos']);
+});    
 
 Route::post('/register', [LoginController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
@@ -86,3 +83,20 @@ Route::post('/pedido/productos', [PedidoProductoController::class, 'store']);
 Route::get('/pedido/{pedido}/productos', [PedidoController::class, 'getProductos']);
 
 
+Route::prefix('/envios')->group(function () {
+    Route::get('/', [EnvioController::class, 'index']);
+    Route::get('/{envio}', [EnvioController::class, 'show']);
+    Route::delete('/{envio}', [EnvioController::class, 'destroy']);
+    Route::put('/{envio}', [EnvioController::class, 'update']);
+    Route::post('/', [EnvioController::class, 'store']);
+    Route::get('/mis-envios/{cliente}', [EnvioController::class, 'showByCliente']);
+
+});
+
+Route::get('/tarjetas', [TarjetaController::class, 'index']);
+Route::post('/tarjetas', [TarjetaController::class, 'store']);
+Route::get('/tarjetas/{cliente}', [TarjetaController::class, 'showByCliente']);
+Route::delete('/tarjetas/{tarjeta}', [TarjetaController::class, 'destroy']);//soft delete
+Route::put('/tarjetas/{tarjeta}', [TarjetaController::class, 'update']);
+Route::get('/tarjeta/{tarjeta}', [TarjetaController::class, 'show']);
+Route::put('/tarjetas/{tarjeta}/predeterminada', [TarjetaController::class, 'setPredeterminada']);

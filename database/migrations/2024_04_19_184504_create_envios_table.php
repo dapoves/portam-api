@@ -21,12 +21,15 @@ return new class extends Migration
             $table->foreignId('destino_id');
             $table->double('precioTotal', 6, 2);
             $table->enum('tipo', ['ligero', 'pesado']);
+            $table->string('descripcion');
             $table->string('peso');
-            $table->enum('espera', ['Este mes', 'Esta semana', 'Hoy', 'Lo antes posible']);
+            $table->enum('espera', ['mes', 'semana', 'manyana', 'hoy', 'antes posible']);
             $table->text('indicaciones')->nullable();
             $table->foreignId('repartidor_id')->nullable();
             $table->foreignId('tarjeta_id')->nullable();
             $table->enum('estado', ['pendiente', 'aceptado', 'en camino', 'entregado', 'cancelado'])->default('pendiente');
+            $table->string('direccionRecogida');
+            $table->string('direccionEntrega');
             $table->dateTime('fechaPedido');
             $table->dateTime('fechaAceptado')->nullable();
             $table->dateTime('fechaEntrega')->nullable();

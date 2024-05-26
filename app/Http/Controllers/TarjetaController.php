@@ -25,8 +25,9 @@ class TarjetaController extends Controller
         return $tarjeta;
     }
 
-    public function showByCliente(){
-        return auth()->user()->tarjetas;
+    public function showByCliente($idUser){
+        $tarjetas = Tarjeta::where('user_id', $idUser)->get();
+        return $tarjetas;
     }
 
     public function destroy($id){
@@ -49,15 +50,32 @@ class TarjetaController extends Controller
         ]);
     }
 
+    public function setPredeterminada($id){
+        $tarjeta = Tarjeta::findOrFail($id);
+
+        // Establecer 'predeterminada' a false en todas las tarjetas del mismo usuario
+        Tarjeta::where('user_id', $tarjeta->user_id)
+            ->where('id', '!=', $tarjeta->id)
+            ->update(['predeterminada' => false]);
+
+        // Establecer 'predeterminada' a true en la tarjeta actual
+        $tarjeta->update(['predeterminada' => true]);
+
+        return response()->json([
+            'message' => "Tarjeta predeterminada actualizada correctamente",
+            'status' => 'ok',
+            'tarjeta' => $tarjeta
+        ]);
+    }
+
     public function validateTarjeta(){
-        return array_merge(request()->validate([
+        return request()->validate([
             'numero' => 'required',
+            'user_id' => 'required|exists:users,id',
             'tipo' => 'required',
             'titular' => 'required',
             'caducidad' => 'required',
             'cvv' => 'required',
-        ]), [
-            'user_id' =>  auth()->user()->id,
         ]);
     }
 }
