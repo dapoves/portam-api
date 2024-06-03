@@ -116,6 +116,7 @@ Route::prefix('/envios')->group(function () {
     Route::get('/reparto/{id}', [RepartidorController::class, 'getEnviosEnReparto']);
     Route::post('/recoger/{envio}', [RepartidorController::class, 'recogerEnvio']);
     Route::post('/entregar/{envio}', [RepartidorController::class, 'entregarEnvio']);
+    Route::post('/cancelar-entrega/{envio}', [RepartidorController::class, 'cancelarEnvio']);
 
 });
 

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('imagen');
             $table->foreignId('categoria_id');
             $table->integer('tiempoPreparacion')->nullable();
+            $table->string('telefono');
             $table->double('costeEnvio', 5, 2);
             $table->bigInteger('likes')->default(0);
             $table->timestamps();

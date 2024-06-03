@@ -54,6 +54,18 @@ class RepartidorController extends Controller
         ]);
     }
 
+    public function cancelarEnvio($id){
+        $envio = Envio::findOrFail($id);
+        $envio->update([
+            'estado' => 'cancelado'
+        ]);
+        return response()->json([
+            'message' => "Envio cancelado",
+            'status' => 'ok',
+            'envio' => $envio
+        ]);
+    }
+
     public function repartirPedido(Request $request){
         $idPedido = $request->pedido_id;
         $idRepartidor = $request->repartidor_id;

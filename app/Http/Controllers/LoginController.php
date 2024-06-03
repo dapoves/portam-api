@@ -40,7 +40,8 @@ class LoginController extends Controller
             'nombre' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
-            'repassword' => 'required|same:password'
+            'repassword' => 'required|same:password',
+            'telefono' => 'nullable|numeric',
         ]);
 
         $user = User::create([
@@ -63,7 +64,9 @@ class LoginController extends Controller
             'status' => 'ok',
             'user' => [
                 'nombre' => $user->nombre,
-                'email' => $user->email ]
+                'email' => $user->email,
+                'rol' => $user->rol,
+                'id' => $user->id]
         ]);
     }
 
