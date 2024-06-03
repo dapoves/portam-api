@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('password');
             $table->string('telefono')->nullable();
             $table->enum('rol', ['admin', 'socio', 'repartidor', 'cliente'])->default('cliente');
+            $table->string('establecimiento_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('imagen')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

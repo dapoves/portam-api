@@ -29,7 +29,7 @@ class PedidoController extends Controller
     }
 
     public function showByCliente($id){
-        $pedidos = Pedido::where('cliente_id', $id)->get();
+        $pedidos = Pedido::where('cliente_id', $id)->orderBy('id', 'desc')->get();
         return $pedidos;
     }
 

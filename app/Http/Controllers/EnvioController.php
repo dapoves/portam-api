@@ -18,7 +18,7 @@ class EnvioController extends Controller
     }
 
     public function showByCliente($id){
-        $envios = Envio::where('cliente_id', $id)->get();
+        $envios = Envio::where('cliente_id', $id)->orderBy('id', 'desc')->get();
         return $envios;
     }
 

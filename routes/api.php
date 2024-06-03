@@ -11,6 +11,8 @@ use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\EnvioController;
 use App\Http\Controllers\TarjetaController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RepartidorController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -45,6 +47,10 @@ Route::prefix('/establecimientos')->group(function () {
     Route::put('/{establecimiento}', [EstablecimientoController::class, 'update']);
     Route::post('/', [EstablecimientoController::class, 'store']);
     Route::get('/{establecimiento}/productos', [EstablecimientoController::class, 'getProductos']);
+    Route::get('/{establecimiento}/categorias', [EstablecimientoController::class, 'getCategorias']);
+    Route::get('/{establecimiento}/pedidos', [EstablecimientoController::class, 'getPedidos']);
+    Route::get('/{establecimiento}/pedidos/pendientes', [EstablecimientoController::class, 'getPedidosPendientes']);
+    Route::get('/{establecimiento}/pedidos/aceptados', [EstablecimientoController::class, 'getPedidosAceptados']);
 });    
 
 Route::post('/register', [LoginController::class, 'register']);
@@ -66,6 +72,13 @@ Route::delete('/categorias/{categoria}', [CategoriaController::class, 'destroy']
 Route::get('/poblaciones', [PoblacionController::class, 'index']);
 Route::get('/poblaciones/{poblacion}', [PoblacionController::class, 'show']);
 
+Route::prefix('/users')->group(function () {
+    Route::get('/', [UserController::class, 'index']);
+    Route::get('/{user}', [UserController::class, 'show']);
+    Route::delete('/{user}', [UserController::class, 'destroy']);
+    Route::put('/{user}', [UserController::class, 'update']);
+    Route::post('/', [UserController::class, 'store']);
+});
 
 
 Route::prefix('/pedidos')->group(function () {
@@ -76,6 +89,14 @@ Route::prefix('/pedidos')->group(function () {
     Route::post('/', [PedidoController::class, 'store']);
     Route::get('/mis-pedidos/{cliente}', [PedidoController::class, 'showByCliente']);
 
+    Route::post('/aceptar/{pedido}', [EstablecimientoController::class, 'aceptarPedido']);
+    Route::post('/on-the-way/{pedido}', [EstablecimientoController::class, 'setPedidoOnTheWay']);
+    Route::post('/rechazar/{pedido}', [EstablecimientoController::class, 'rechazarPedido']);
+
+    Route::post('/repartir', [RepartidorController::class, 'repartirPedido']);
+    Route::get('/reparto/{id}', [RepartidorController::class, 'getPedidoEnReparto']);
+    Route::post('/entregar/{pedido}', [RepartidorController::class, 'entregarPedido']);
+    Route::post('/cancelar-entrega/{pedido}', [RepartidorController::class, 'cancelarPedido']);
 });
 
 Route::get('/pedido/productos', [PedidoProductoController::class, 'index']);
@@ -90,6 +111,11 @@ Route::prefix('/envios')->group(function () {
     Route::put('/{envio}', [EnvioController::class, 'update']);
     Route::post('/', [EnvioController::class, 'store']);
     Route::get('/mis-envios/{cliente}', [EnvioController::class, 'showByCliente']);
+
+    Route::post('/repartir', [RepartidorController::class, 'repartirEnvio']);
+    Route::get('/reparto/{id}', [RepartidorController::class, 'getEnviosEnReparto']);
+    Route::post('/recoger/{envio}', [RepartidorController::class, 'recogerEnvio']);
+    Route::post('/entregar/{envio}', [RepartidorController::class, 'entregarEnvio']);
 
 });
 

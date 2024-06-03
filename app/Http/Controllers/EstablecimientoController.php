@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Establecimiento;
+use App\Models\Pedido;
 
 class EstablecimientoController extends Controller
 {
@@ -64,6 +65,55 @@ class EstablecimientoController extends Controller
 
     public function getProductos(Establecimiento $establecimiento){
         return $establecimiento->productos;
+    }
+
+    public function getPedidos(Establecimiento $establecimiento){
+        return $establecimiento->pedidos;
+    }
+
+    public function getPedidosPendientes(Establecimiento $establecimiento){
+        return $establecimiento->pedidos->where('estado', 'pendiente')->values();
+    }
+
+    public function getPedidosAceptados(Establecimiento $establecimiento){
+        return $establecimiento->pedidos->where('estado', 'aceptado')->sortBy('fechaAceptado')->values();
+    }
+
+    public function aceptarPedido($id){
+        $pedido = Pedido::findOrFail($id);
+        $pedido->update([
+            'estado' => 'aceptado',
+            'fechaAceptado' => now()
+        ]);
+        return response()->json([
+            'message' => "Pedido aceptado",
+            'status' => 'ok',
+            'pedido' => $pedido
+        ]);
+    }
+
+    public function setPedidoOnTheWay($id){
+        $pedido = Pedido::findOrFail($id);
+        $pedido->update([
+            'estado' => 'en camino'
+        ]);
+        return response()->json([
+            'message' => "Pedido en camino",
+            'status' => 'ok',
+            'pedido' => $pedido
+        ]);
+    } 
+
+    public function rechazarPedido($id){
+        $pedido = Pedido::findOrFail($id);
+        $pedido->update([
+            'estado' => 'cancelado'
+        ]);
+        return response()->json([
+            'message' => "Pedido rechazado",
+            'status' => 'ok',
+            'pedido' => $pedido
+        ]);
     }
 
     public function validateEstablecimiento(){
