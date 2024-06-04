@@ -70,12 +70,13 @@ class TarjetaController extends Controller
 
     public function validateTarjeta(){
         return request()->validate([
-            'numero' => 'required',
+            'numero' => 'required|digits_between:14,16',
             'user_id' => 'required|exists:users,id',
-            'tipo' => 'required',
+            'tipo' => 'required|in:visa,mastercard,american_express',
             'titular' => 'required',
-            'caducidad' => 'required',
-            'cvv' => 'required',
+            'caducidad' => 'required|date_format:m/y|after_or_equal:today',
+            'cvv' => 'required|digits:3',
         ]);
     }
+
 }

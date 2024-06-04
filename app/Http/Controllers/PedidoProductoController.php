@@ -15,7 +15,25 @@ class PedidoProductoController extends Controller
 
     public function store(Request $request)
     {
-        $pedidoProducto = PedidoProducto::create($this->validatePedidoProducto());
+        $validatedData = $this->validatePedidoProducto();
+        $validatedData['cantidad'] = $validatedData['cantidad'] ?? 1;
+        $existingPedidoProducto = PedidoProducto::where('pedido_id', $validatedData['pedido_id'])
+            ->where('producto_id', $validatedData['producto_id'])
+            ->first();
+
+        if ($existingPedidoProducto) {
+            $existingPedidoProducto->cantidad += $validatedData['cantidad'];
+            $existingPedidoProducto->save();
+
+            return response()->json([
+                'message' => "Cantidad del producto actualizada correctamente",
+                'status' => 'ok',
+                'pedidoProducto' => $existingPedidoProducto
+            ]);
+        }
+
+        $pedidoProducto = PedidoProducto::create($validatedData);
+
         return response()->json([
             'message' => "Producto añadido al pedido correctamente",
             'status' => 'ok',
