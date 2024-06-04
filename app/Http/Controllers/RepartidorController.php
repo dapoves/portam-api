@@ -69,6 +69,18 @@ class RepartidorController extends Controller
     public function repartirPedido(Request $request){
         $idPedido = $request->pedido_id;
         $idRepartidor = $request->repartidor_id;
+
+        // Verificar si el repartidor ya tiene un pedido en camino o aceptado
+        $pedidoExistente = Pedido::where('repartidor_id', $idRepartidor)
+                                 ->whereIn('estado', ['en camino', 'aceptado'])
+                                 ->first();
+        if ($pedidoExistente) {
+            return response()->json([
+                'message' => "Ya tienes un pedido en camino o aceptado",
+                'status' => 'error'
+            ]);
+        }
+
         $pedido = Pedido::findOrFail($idPedido);
         $pedido->update([
             'repartidor_id' => $idRepartidor
@@ -78,7 +90,7 @@ class RepartidorController extends Controller
             'status' => 'ok',
             'pedido' => $pedido
         ]);
-    }  
+    }
 
     public function getPedidoEnReparto($id){
         $pedido = Pedido::where('repartidor_id', $id)->whereIn('estado', ['en camino', 'aceptado'])->firstOr(function () {
