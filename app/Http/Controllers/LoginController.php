@@ -35,13 +35,13 @@ class LoginController extends Controller
         ], 401);
     }
 
-    public function register(Request $request){ //probar el valiate
+    public function register(Request $request){
         $request->validate([
             'nombre' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'repassword' => 'required|same:password',
-            'telefono' => 'nullable|numeric',
+            'telefono' => 'nullable|numeric|digits:9',
         ]);
 
         $user = User::create([
