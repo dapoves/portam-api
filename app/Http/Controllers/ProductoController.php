@@ -94,7 +94,6 @@ class ProductoController extends Controller
             'imagen' => 'required',
             'precio' => 'required',
             'establecimiento_id' => 'required',
-            'tamano' => 'required|in:pequeno,mediano,grande',
         ]);
     }
 }
