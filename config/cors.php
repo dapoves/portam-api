@@ -19,8 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:3000'], 
-    // tocar esto
+    'allowed_origins' => ['https://portam.vercel.app'], 
 
     'allowed_origins_patterns' => [],
 
