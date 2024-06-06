@@ -12,11 +12,6 @@ class Producto extends Model
 
     protected $guarded = [];
 
-    public function categoria()
-    {
-        return $this->belongsTo(Categoria::class);
-    }
-
     public function establecimiento()
     {
         return $this->belongsTo(Establecimiento::class);
