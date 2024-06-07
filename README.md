@@ -1,72 +1,52 @@
 # Portam-API
 
-Portam-API es una API desarrollada con Laravel que ofrece funcionalidades para una aplicación web de repartos locales. Esta API proporciona una interfaz robusta para gestionar los diferentes aspectos relacionados con los repartos, facilitando la integración con la aplicación web y permitiendo una experiencia fluida para los usuarios finales.
+Portam-API es una API desarrollada con Laravel que ofrece funcionalidades para la aplicación web de repartos locales portam.
 
-## Características
-
-- **Gestión de Repartidores:** Administra la información de los repartidores, incluyendo su perfil, estado y disponibilidad.
-- **Seguimiento de Pedidos:** Permite el seguimiento en tiempo real de los pedidos en curso, ofreciendo información detallada sobre su estado y ubicación.
-- **Gestión de Órdenes:** Facilita la gestión de órdenes de entrega, desde la creación hasta la finalización, permitiendo realizar acciones como asignar repartidores y actualizar el estado del pedido.
-- **Autenticación y Autorización:** Ofrece un sistema robusto de autenticación y autorización para garantizar la seguridad de la API y proteger los datos sensibles.
-
-## Instalación
+# Instalación
+## Requisitos
+- php
+- docker
+> **Warning**<br>
+Si el sistema operativo es Windows, es necesario utilizar WSL
 
 1. Clona el repositorio desde GitHub:
+```bash
+git clone https://github.com/dapoves/portam-api.git
+```
+
+2. Instala las dependencias del proyecto:
+```bash
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php83-composer:latest \
+    composer install --ignore-platform-reqs
+```
+
+> **Note**<br>
+Es recomendable añadir el siguiente alias para no tener que poner './vendor/bin/sail' para cada comando
+```bash
+alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
+```
+3. Levantar la API
+```bash
+sail up -d
+```
+
+4. Realizar las migraciones de las tablas:
 
 ```bash
-git clone https://github.com/tu_usuario/portam-api.git
+sail artisan migrate
 ```
 
-2. Instala las dependencias del proyecto utilizando Composer:
 
+5. Generar datos de prueba (recomendado):
 ```bash
-cd portam-api
-composer install
+sail artisan db:seed
 ```
 
-3. Copia el archivo de configuración `.env.example` y configura las variables de entorno:
-
+6. Generar enlace simbolico para las imagenes de storage:
 ```bash
-cp .env.example .env
+sail artisan storage:link
 ```
-
-4. Genera una nueva clave de aplicación:
-
-```bash
-php artisan key:generate
-```
-
-5. Configura tu base de datos en el archivo `.env`:
-
-```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=nombre_de_tu_base_de_datos
-DB_USERNAME=tu_usuario_de_base_de_datos
-DB_PASSWORD=tu_contraseña_de_base_de_datos
-```
-
-6. Ejecuta las migraciones para crear las tablas de la base de datos:
-
-```bash
-php artisan migrate
-```
-
-7. ¡Listo para empezar! Puedes iniciar el servidor de desarrollo con el siguiente comando:
-
-```bash
-php artisan serve
-```
-
-## Recursos para la creación de la API
-
-Para la creación de esta api se ha utilizado principalmente la documentación de laravel 
-
-## Licencia
-
-Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
-
----
-
-¡Gracias por utilizar Portam-API! Esperamos que esta API sea útil para tu aplicación de repartos locales. Si tienes alguna pregunta o problema, no dudes en ponerte en contacto con nosotros.
