@@ -21,11 +21,11 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $categorias = [
-            ['nombre' => 'Bares y Restaurantes', 'imagen' => 'storage/categorias/burger.png'],
-            ['nombre' => 'Papelerías', 'imagen' => 'storage/categorias/books.png'],
-            ['nombre' => 'Hornos', 'imagen' => 'storage/categorias/bread.png'],
-            ['nombre' => 'Tecnología', 'imagen' => 'storage/categorias/responsive.png'],
-            ['nombre' => 'Supermercados', 'imagen' => 'storage/categorias/food.png'],
+            ['nombre' => 'Bares y Restaurantes', 'imagen' => 'burger.png'],
+            ['nombre' => 'Papelerías', 'imagen' => 'books.png'],
+            ['nombre' => 'Hornos', 'imagen' => 'bread.png'],
+            ['nombre' => 'Tecnología', 'imagen' => 'responsive.png'],
+            ['nombre' => 'Supermercados', 'imagen' => 'food.png'],
         ];
 
         foreach ($categorias as $categoria) {
