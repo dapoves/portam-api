@@ -18,5 +18,17 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        $categorias = [
+            ['nombre' => 'Bares y Restaurantes', 'imagen' => 'storage/categorias/burger.png'],
+            ['nombre' => 'Papelerías', 'imagen' => 'storage/categorias/books.png'],
+            ['nombre' => 'Hornos', 'imagen' => 'storage/categorias/bread.png'],
+            ['nombre' => 'Tecnología', 'imagen' => 'storage/categorias/responsive.png'],
+            ['nombre' => 'Supermercados', 'imagen' => 'storage/categorias/food.png'],
+        ];
+
+        foreach ($categorias as $categoria) {
+            DB::table('categorias')->insert($categoria);
+        }
     }
 }
