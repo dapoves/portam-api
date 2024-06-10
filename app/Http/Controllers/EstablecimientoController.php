@@ -157,7 +157,7 @@ class EstablecimientoController extends Controller
         return $establecimientos;
     }
 
-    public function esFavorito($id, $idUsuario){
+    public function isFavorito($id, $idUsuario){
         $favorito = EstablecimientoFavorito::where('establecimiento_id', $id)
             ->where('user_id', $idUsuario)
             ->exists();
