@@ -121,19 +121,40 @@ class EstablecimientoController extends Controller
         $id = $request->input('establecimiento_id');
         $idUsuario = $request->input('user_id');
         $establecimiento = Establecimiento::findOrFail($id);
-        $establecimiento->update([
-            'likes' => $establecimiento->likes + 1
-        ]);
-        EstablecimientoFavorito::create([
-            'establecimiento_id' => $id,
-            'user_id' => $idUsuario,
-        ]);
-
+    
+        $favorito = EstablecimientoFavorito::where('establecimiento_id', $id)
+            ->where('user_id', $idUsuario)
+            ->first();
+    
+        if ($favorito) {
+            // Si existe, restamos un like y eliminamos el EstablecimientoFavorito
+            $establecimiento->update([
+                'likes' => $establecimiento->likes - 1
+            ]);
+            $favorito->delete();
+            $message = "Like eliminado";
+        } else {
+            // Si no existe, sumamos un like y creamos un nuevo EstablecimientoFavorito
+            $establecimiento->update([
+                'likes' => $establecimiento->likes + 1
+            ]);
+            EstablecimientoFavorito::create([
+                'establecimiento_id' => $id,
+                'user_id' => $idUsuario,
+            ]);
+            $message = "Like añadido";
+        }
+    
         return response()->json([
-            'message' => "Like añadido",
+            'message' => $message,
             'status' => 'ok',
             'establecimiento' => $establecimiento
         ]);
+    }
+
+    public function getFavoritos($id){
+        $establecimientos = EstablecimientoFavorito::where('user_id', $id)->get();
+        return $establecimientos;
     }
 
     public function validateEstablecimiento(){
