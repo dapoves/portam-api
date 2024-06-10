@@ -153,8 +153,8 @@ class EstablecimientoController extends Controller
     }
 
     public function getFavoritos($id){
-        $establecimientos = EstablecimientoFavorito::where('user_id', $id)->get();
-        return $establecimientos;
+        $favoritos = EstablecimientoFavorito::with('establecimiento')->where('user_id', $id)->get();
+        return $favoritos;
     }
 
     public function isFavorito($idUsuario, $id){
