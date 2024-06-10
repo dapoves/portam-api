@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Establecimiento;
 use App\Models\Pedido;
+use App\Models\EstablecimientoFavorito;
 
 class EstablecimientoController extends Controller
 {
@@ -113,6 +114,25 @@ class EstablecimientoController extends Controller
             'message' => "Pedido rechazado",
             'status' => 'ok',
             'pedido' => $pedido
+        ]);
+    }
+
+    public function addLike(Request $request){
+        $id = $request->input('establecimiento_id');
+        $idUsuario = $request->input('user_id');
+        $establecimiento = Establecimiento::findOrFail($id);
+        $establecimiento->update([
+            'likes' => $establecimiento->likes + 1
+        ]);
+        EstablecimientoFavorito::create([
+            'establecimiento_id' => $id,
+            'user_id' => $idUsuario,
+        ]);
+
+        return response()->json([
+            'message' => "Like añadido",
+            'status' => 'ok',
+            'establecimiento' => $establecimiento
         ]);
     }
 
