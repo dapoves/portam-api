@@ -53,6 +53,7 @@ Route::prefix('/establecimientos')->group(function () {
     Route::get('/{establecimiento}/pedidos/aceptados', [EstablecimientoController::class, 'getPedidosAceptados']);
     Route::post('/addLike', [EstablecimientoController::class, 'addLike']);
     Route::get('/favoritos/{user}', [EstablecimientoController::class, 'getFavoritos']);
+    Route::get('/favoritos/{user}/{establecimiento}', [EstablecimientoController::class, 'isFavorito']);
 });    
 
 Route::post('/register', [LoginController::class, 'register']);
